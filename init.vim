@@ -1,4 +1,15 @@
-set ts=2
+call plug#begin()
+
+" Updated theme
+Plug 'vim-airline/vim-airline'
+
+" Better work with buffers
+Plug 'ctrlpvim/ctrlp.vim'
+
+Plug 'dohsimpson/vim-macroeditor'
+call plug#end()
+
+set tabstop=2
 set shiftwidth=2
 set expandtab
 retab
@@ -6,12 +17,6 @@ retab
 set number
 autocmd TermOpen * setlocal nonumber norelativenumber
 
-call plug#begin()
-
-" Updated theme
-Plug 'vim-airline/vim-airline'
-
-call plug#end()
 
 " move between terminal and window 
 " via \[ and \]
