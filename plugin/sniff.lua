@@ -4,8 +4,8 @@ end
 
 _G.sniff = {}
 
-local newline = vim.fn.has("win32") and "\r\n" 
-                                    or  "\n"
+local newline = (vim.fn.has("win32") == 1) and "\r\n" 
+                                           or  "\n"
 
 function sniff:terminal()
   if (not vim.b.terminal_job_id) then

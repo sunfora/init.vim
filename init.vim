@@ -9,6 +9,11 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'dohsimpson/vim-macroeditor'
 call plug#end()
 
+map <silent>; :CtrlPBuffer<CR>
+
+set mouse=a
+set nohlsearch
+
 set tabstop=2
 set shiftwidth=2
 set expandtab
@@ -20,34 +25,41 @@ autocmd TermOpen * setlocal nonumber norelativenumber
 
 " move between terminal and window 
 " via \[ and \]
-map <C-\><C-]> <C-w>li
-tmap <C-\><C-[> <C-\><C-n><C-w>h
+map <silent><C-\><C-]> <C-w>li
+tmap <silent><C-\><C-[> <C-\><C-n><C-w>h
 
 " bind terminal
-nmap \. :lua sniff:terminal()<CR>
+nmap <silent>\. :lua sniff:terminal()<CR>
 
 " send yanked text
-nmap \p :lua sniff:send(vim.fn.getreg('"'))<CR>
+nmap <silent>\p :lua sniff:send(vim.fn.getreg('"'))<CR>
 
 " send newline
-nmap \<CR> :lua sniff:sendln("")<CR>
+nmap <silent>\<CR> :lua sniff:sendln("")<CR>
 
 " send yanked text and newline
-nmap \; \p\<CR>
+nmap <silent>\; \p\<CR>
 
 " send quote 
-nmap \' :lua sniff:send("'")<CR>
+nmap <silent>\' :lua sniff:send("'")<CR>
 
 " send opening bracket 
-nmap \9 :lua sniff:send("(")<CR>
+nmap <silent>\9 :lua sniff:send("(")<CR>
 " send closing bracket 
-nmap \0 :lua sniff:send(")")<CR>
+nmap <silent>\0 :lua sniff:send(")")<CR>
 
 " yank current list and send it
-nmap \( ya(\;
+nmap <silent>\( ya(\;
 
 " enter file
-nmap \> :lua sniff:sendln(',enter (file "'..string.gsub(vim.fn.expand("%"), [[\]], [[\\]])..'")')<CR><CR>
+nmap <silent>\> :lua sniff:sendln(',enter (file "'..string.gsub(vim.fn.expand("%"), [[\]], [[\\]])..'")')<CR><CR>
 
 " go upper
-nmap \< :lua sniff:sendln(",top")<CR>
+nmap <silent>\< :lua sniff:sendln(",top")<CR>
+
+nnoremap <silent><C-Left> ?(<CR>
+nnoremap <silent><C-Right> /(<CR>
+nnoremap <silent><C-S-Right> <C-Left><C-Right>%<C-Right>
+nnoremap <silent><C-S-Left> <C-Left><C-Right>?)<CR>%
+
+nnoremap gp `[v`]
