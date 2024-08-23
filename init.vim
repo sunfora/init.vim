@@ -6,24 +6,14 @@ Plug 'vim-airline/vim-airline'
 " Better work with buffers
 Plug 'ctrlpvim/ctrlp.vim'
 
-" LSP plugins
-Plug 'prabirshrestha/vim-lsp'
-Plug 'mattn/vim-lsp-settings'
+" Try number two
+" https://www.youtube.com/watch?v=3a1PCir_aHs
+Plug 'williamboman/mason.nvim'
+Plug 'williamboman/mason-lspconfig.nvim'
+Plug 'neovim/nvim-lspconfig'
 
 Plug 'dohsimpson/vim-macroeditor'
 call plug#end()
-
-" replace omnicomplete with LSP
-" see video https://www.youtube.com/watch?v=n6JEqPuWOxg
-function! s:on_lsp_buffer_enabled() abort
-  setlocal omnifunc=lsp#complete
-endfunction
-
-augroup lsp_install
-  au!
-  autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
-augroup END
-
 
 map <silent>; :CtrlPBuffer<CR>
 
