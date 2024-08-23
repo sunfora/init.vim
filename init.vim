@@ -13,7 +13,12 @@ Plug 'williamboman/mason-lspconfig.nvim'
 Plug 'neovim/nvim-lspconfig'
 
 Plug 'dohsimpson/vim-macroeditor'
+Plug 'morhetz/gruvbox'
+Plug 'iibe/gruvbox-high-contrast'
+Plug 'Abstract-IDE/Abstract-cs'
 call plug#end()
+
+autocmd vimenter * ++nested colorscheme gruvbox-high-contrast
 
 map <silent>; :CtrlPBuffer<CR>
 
