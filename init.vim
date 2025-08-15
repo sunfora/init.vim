@@ -11,14 +11,17 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'williamboman/mason.nvim'
 Plug 'williamboman/mason-lspconfig.nvim'
 Plug 'neovim/nvim-lspconfig'
+Plug 'mfussenegger/nvim-lint'
 
 Plug 'dohsimpson/vim-macroeditor'
 Plug 'morhetz/gruvbox'
 Plug 'iibe/gruvbox-high-contrast'
 Plug 'Abstract-IDE/Abstract-cs'
+Plug 'NLKNguyen/papercolor-theme'
+
 call plug#end()
 
-autocmd vimenter * ++nested colorscheme gruvbox-high-contrast
+autocmd vimenter * ++nested colorscheme PaperColor 
 
 map <silent>; :CtrlPBuffer<CR>
 
@@ -33,6 +36,7 @@ retab
 set number
 autocmd TermOpen * setlocal nonumber norelativenumber
 
+au BufWritePost * lua require('lint').try_lint()
 
 " move between terminal and window 
 " via \[ and \]
@@ -80,3 +84,46 @@ vnoremap <silent>s' <Esc>`<i'<Esc>`>la'<Esc>`<
 vnoremap <silent>s` <Esc>`<i`<Esc>`>la`<Esc>`<
 vnoremap <silent><C-Down> <Esc>`>x`<x
 nnoremap gp `[v`]
+
+nnoremap <silent>+ :lua vim.diagnostic.open_float()<CR>
+
+nmap <F2> :make<CR>
+
+augroup MyPHPHighlights
+  autocmd!
+  autocmd FileType php syntax clear phpTodo
+augroup END
+
+augroup MyJSHighlights
+  autocmd!
+  autocmd FileType javascript syntax clear javaScriptCommentTodo
+augroup END
+
+augroup CustomTodoHighlights
+  autocmd!
+  " After colorscheme and plugins load, apply these highlights
+  autocmd ColorScheme * call s:SetupTodoHighlights()
+  autocmd VimEnter * call s:SetupTodoHighlights()
+
+  function! s:SetupTodoHighlights() abort
+
+    " Define keywords inside comments or anywhere
+    syntax keyword Todo  TODO  contained
+    syntax keyword Done  DONE  contained
+    syntax keyword Note  NOTE  contained
+    syntax keyword Usage USAGE contained
+
+    syntax match Author "(\zs[^()]*\ze):" contained
+
+    syntax cluster customkwords contains=Todo,Done,Note,Usage
+    syntax cluster customkwords add=Author
+
+    syntax match LineWithAuthor      "\(NOTE\|TODO\|DONE\|USAGE\)\(([^()]\{-}):\)\?" containedin=ALL contains=@customkwords
+    " Custom highlight groups
+    highlight Todo   ctermfg=208 cterm=bold   gui=bold   guifg=#FF8700
+    highlight Done   ctermfg=114 cterm=bold   gui=bold   guifg=#9ACD32
+    highlight Note   ctermfg=140 cterm=italic gui=italic guifg=#C8A2C8
+    highlight Usage  ctermfg=140 cterm=italic gui=bold   guifg=#C8A2C8
+    highlight Author ctermfg=140 cterm=italic gui=italic guifg=#FFD700    
+  endfunction
+augroup END
