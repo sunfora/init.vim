@@ -137,6 +137,30 @@ augroup CustomTodoHighlights
   endfunction
 augroup END
 
+function! RunDetached(cmd)
+  let job_id = jobstart(a:cmd, {'detach': v:true})
+endfunction
+
+function! IsRunning(process_name)
+  let pgrep_result = trim(system('pgrep -x ' . shellescape(a:process_name)))
+  return !empty(pgrep_result)
+endfunction
+
+function! OpenIdea()
+  let current_line = line('.')
+  let current_file = expand('%:p')
+  let project_root = GetProjectRoot()
+  let command = ' idea ' . project_root . ' --line ' . current_line . ' ' . current_file
+
+  if IsRunning('idea')
+    call system(command)
+  else
+    call RunDetached(command)
+  endif
+endfunction
+
+command! OpenIdea :call OpenIdea()
+autocmd FileType java nnoremap <F2> :OpenIdea<CR>
 
 
 function! FindFilesSmart()
