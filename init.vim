@@ -13,6 +13,10 @@ Plug 'williamboman/mason-lspconfig.nvim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'mfussenegger/nvim-lint'
 
+" Better file search
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
 " Install themes
 Plug 'dohsimpson/vim-macroeditor'
 Plug 'morhetz/gruvbox'
@@ -132,3 +136,46 @@ augroup CustomTodoHighlights
     highlight Author   ctermfg=140 cterm=italic gui=italic guifg=#FFD700    
   endfunction
 augroup END
+
+
+
+function! FindFilesSmart()
+  if !empty(finddir('.git', expand('%:p:h') . ';'))
+    :GFiles
+  else
+    :Files
+  endif
+endfunction
+
+
+" --- Helper function to determine the project root ---
+" Returns the git repo's top-level directory if it exists,
+" otherwise returns the current directory '.'.
+function! GetProjectRoot()
+  let git_root = trim(system('git rev-parse --show-toplevel 2>/dev/null'))
+
+  if v:shell_error == 0
+    return git_root
+  else
+    return '.'
+  endif
+endfunction
+
+function! PipeAllToFzf()
+  let project_root = GetProjectRoot()
+
+  let source_cmd = '(cd ' . shellescape(project_root) . ' && rg --line-number --no-heading ".*" .)'
+
+  let fzf_opts = {
+    \ 'dir': project_root,
+    \ 'prompt': 'OmniSearch> '
+    \ }
+
+  call fzf#vim#grep(source_cmd, 1, fzf#vim#with_preview(fzf_opts))
+endfunction
+
+" Command and function to pipe ALL project content into fzf for a pure fuzzy search.
+command! FzfAll call PipeAllToFzf()
+command! FindFilesSmart call FindFilesSmart()
+nnoremap <F3> :FindFilesSmart<CR>
+nnoremap <F4> :FzfAll<CR>
