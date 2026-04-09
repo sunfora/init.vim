@@ -6,6 +6,12 @@ Plug 'vim-airline/vim-airline'
 " Better work with buffers
 Plug 'ctrlpvim/ctrlp.vim'
 
+" Add visibility to marks
+Plug 'kshenoy/vim-signature'
+
+" Add editable registers
+Plug 'm6z/VimRegDeluxe'
+
 " Try number two
 " https://www.youtube.com/watch?v=3a1PCir_aHs
 Plug 'williamboman/mason.nvim'
