@@ -21,6 +21,7 @@ local on_java_attach = function(client, bufnr)
 end
 
 require("mason").setup()
+
 require("mason-lspconfig").setup {
   on_attach = on_attach,
 }
@@ -36,9 +37,25 @@ require("lspconfig").cssls.setup {
 require("lspconfig").jdtls.setup {
   on_attach = on_java_attach,
 }
+require("lspconfig").basedpyright.setup {
+  on_attach = on_attach,
+  settings = {
+    basedpyright = {
+      analysis = {
+        diagnosticSeverityOverrides = {
+          reportExplicitAny = "none",
+          reportExplicitAny = "none",
+          reportUnknownVariableType = "none",
+          reportUnknownArgumentType = "none",
+          reportAny = "none",
+        },
+      },
+    },
+  },
+}
 require("lspconfig").clangd.setup {
   init_options = {
-    -- fallbackFlags = {'--std=c++20'}
+    fallbackFlags = {'--std=c17'}
   },
   clang_user_options = ' -DCLANG_COMPLETE_ONLY',
   on_attach = on_attach,
@@ -68,3 +85,6 @@ require("lspconfig").racket_langserver.setup{
   on_attach = on_attach,
 }
 
+require("lspconfig").rust_analyzer.setup {
+  cmd = { "rust-analyzer" },
+}
