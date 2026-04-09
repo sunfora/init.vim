@@ -122,27 +122,30 @@ augroup CustomTodoHighlights
   function! s:SetupTodoHighlights() abort
 
     " Define keywords inside comments or anywhere
-    syntax keyword Todo   TODO   contained
-    syntax keyword Done   DONE   contained
-    syntax keyword Note   NOTE   contained
-    syntax keyword Usage  USAGE  contained
-    syntax keyword Research RESEARCH contained
+    syntax keyword Todo      TODO      contained
+    syntax keyword Done      DONE      contained
+    syntax keyword Note      NOTE      contained
+    syntax keyword Usage     USAGE     contained
+    syntax keyword Research  RESEARCH  contained
+    syntax keyword Canceled  CANCELED  contained
 
     syntax match Author "(\zs[^()]*\ze):" contained
 
     syntax cluster customkwords contains=Todo,Done,Note
     syntax cluster customkwords add=Usage
     syntax cluster customkwords add=Research
+    syntax cluster customkwords add=Canceled
     syntax cluster customkwords add=Author
 
-    syntax match LineWithAuthor      "\(NOTE\|TODO\|DONE\|USAGE\|RESEARCH\)\(([^()]\{-}):\)\?" containedin=ALL contains=@customkwords
+    syntax match LineWithAuthor      "\(CANCELED\|NOTE\|TODO\|DONE\|USAGE\|RESEARCH\)\(([^()]\{-}):\)\?" containedin=ALL contains=@customkwords
     " Custom highlight groups
-    highlight Todo     ctermfg=208 cterm=bold   gui=bold   guifg=#FF8700
-    highlight Done     ctermfg=114 cterm=bold   gui=bold   guifg=#9ACD32
-    highlight Note     ctermfg=140 cterm=italic gui=italic guifg=#C8A2C8
-    highlight Usage    ctermfg=140 cterm=italic gui=bold   guifg=#C8A2C8
-    highlight Research ctermfg=114 cterm=bold   gui=bold   guifg=#9ACD32
-    highlight Author   ctermfg=140 cterm=italic gui=italic guifg=#FFD700    
+    highlight Todo      ctermfg=208 cterm=bold   gui=bold   guifg=#FF8700
+    highlight Canceled  ctermfg=151 cterm=bold   gui=bold   guifg=#FA0626
+    highlight Done      ctermfg=114 cterm=bold   gui=bold   guifg=#9ACD32
+    highlight Note      ctermfg=140 cterm=italic gui=italic guifg=#C8A2C8
+    highlight Usage     ctermfg=140 cterm=italic gui=bold   guifg=#C8A2C8
+    highlight Research  ctermfg=114 cterm=bold   gui=bold   guifg=#9ACD32
+    highlight Author    ctermfg=140 cterm=italic gui=italic guifg=#FFD700    
   endfunction
 augroup END
 
