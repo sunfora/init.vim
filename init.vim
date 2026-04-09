@@ -76,6 +76,9 @@ nmap <silent>\0 :lua sniff:send(")")<CR>
 
 " yank current list and send it
 nmap <silent>\( ya(\;
+" yank current { ... } and send it
+nmap <silent>\{ ya{\;
+nmap <silent>\[ ya[\;
 
 " enter file
 nmap <silent>\> :lua sniff:sendln(',enter (file "'..string.gsub(vim.fn.expand("%"), [[\]], [[\\]])..'")')<CR><CR>
