@@ -212,3 +212,6 @@ command! FzfAll call PipeAllToFzf()
 command! FindFilesSmart call FindFilesSmart()
 nnoremap <F3> :FindFilesSmart<CR>
 nnoremap <F4> :FzfAll<CR>
+
+au BufRead,BufNewFile *.grep set filetype=grep
+
