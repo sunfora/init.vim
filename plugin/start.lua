@@ -17,7 +17,6 @@ end
 
 local on_java_attach = function(client, bufnr)
   on_attach(client, bufnr)
-  -- client.server_capabilities.semanticTokensProvider = nil
 end
 
 require("mason").setup()
@@ -25,25 +24,32 @@ require("mason").setup()
 require("mason-lspconfig").setup {
   on_attach = on_attach,
 }
-require("lspconfig").tsserver.setup {
+
+local function enable_lsp(server_name, opts)
+  vim.lsp.config(server_name, opts or {})
+  vim.lsp.enable(server_name)
+end
+
+-- Настройка всех серверов
+enable_lsp("ts_ls", { on_attach = on_attach }) 
+enable_lsp("html", { on_attach = on_attach })
+
+
+enable_lsp("cssls", {
   on_attach = on_attach,
-}
-require("lspconfig").html.setup {
+})
+enable_lsp("css_variables", {
   on_attach = on_attach,
-}
-require("lspconfig").cssls.setup {
-  on_attach = on_attach,
-}
-require("lspconfig").jdtls.setup {
-  on_attach = on_java_attach,
-}
-require("lspconfig").basedpyright.setup {
+})
+
+enable_lsp("jdtls", { on_attach = on_java_attach })
+
+enable_lsp("basedpyright", {
   on_attach = on_attach,
   settings = {
     basedpyright = {
       analysis = {
         diagnosticSeverityOverrides = {
-          reportExplicitAny = "none",
           reportExplicitAny = "none",
           reportUnknownVariableType = "none",
           reportUnknownArgumentType = "none",
@@ -52,29 +58,21 @@ require("lspconfig").basedpyright.setup {
       },
     },
   },
-}
-require("lspconfig").clangd.setup {
+})
+
+enable_lsp("clangd", {
   init_options = {
-    fallbackFlags = {'--std=c17'}
+    fallbackFlags = { '-Wall', '-Wextra' } 
   },
   clang_user_options = ' -DCLANG_COMPLETE_ONLY',
   on_attach = on_attach,
-}
-require("lspconfig").hls.setup {
-  on_attach = on_attach,
-}
-require("lspconfig").phpactor.setup {
-  on_attach = on_attach,
-}
+})
 
-require('lint').linters_by_ft = {
-  haskell = {'hlint'},
-}
-require("lspconfig").kotlin_language_server.setup {
-  on_attach = on_attach,
-}
+enable_lsp("hls", { on_attach = on_attach })
+enable_lsp("phpactor", { on_attach = on_attach })
+enable_lsp("kotlin_language_server", { on_attach = on_attach })
 
-require("lspconfig").racket_langserver.setup{
+enable_lsp("racket_langserver", {
   cmd = { "racket", "--lib", "racket-langserver" },
   filetypes = { "racket", "scheme" },
   offset_encoding = "utf-8",
@@ -83,8 +81,13 @@ require("lspconfig").racket_langserver.setup{
   end,
   single_file_support = true,
   on_attach = on_attach,
-}
+})
 
-require("lspconfig").rust_analyzer.setup {
+enable_lsp("rust_analyzer", {
   cmd = { "rust-analyzer" },
+})
+
+-- Линтеры
+require('lint').linters_by_ft = {
+  haskell = {'hlint'},
 }
