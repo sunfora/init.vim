@@ -29,10 +29,11 @@ Plug 'morhetz/gruvbox'
 Plug 'iibe/gruvbox-high-contrast'
 Plug 'Abstract-IDE/Abstract-cs'
 Plug 'NLKNguyen/papercolor-theme'
+Plug 'reobin/olive-crt.nvim'
 
 call plug#end()
 
-autocmd vimenter * ++nested colorscheme PaperColor 
+autocmd vimenter * ++nested colorscheme olive-crt
 
 map <silent>; :CtrlPBuffer<CR>
 
@@ -144,14 +145,14 @@ augroup CustomTodoHighlights
 
     syntax match LineWithAuthor      "\(CANCELED\|NOTE\|TODO\|DONE\|USAGE\|RESEARCH\)\(([^()]\{-}):\)\?" containedin=ALL contains=@customkwords
     " Custom highlight groups
-    highlight Todo      ctermfg=208 cterm=bold   gui=bold   guifg=#FF8700
-    highlight Canceled  ctermfg=151 cterm=bold   gui=bold   guifg=#FA0626
-    highlight Done      ctermfg=114 cterm=bold   gui=bold   guifg=#9ACD32
-    highlight Note      ctermfg=140 cterm=italic gui=italic guifg=#C8A2C8
-    highlight Usage     ctermfg=140 cterm=italic gui=bold   guifg=#C8A2C8
-    highlight Research  ctermfg=114 cterm=bold   gui=bold   guifg=#9ACD32
-    highlight Author    ctermfg=140 cterm=italic gui=italic guifg=#FFD700    
-  endfunction
+    highlight Todo      ctermfg=240 cterm=bold   gui=bold   guifg=#FF8700 guibg=NONE
+    highlight Canceled  ctermfg=151 cterm=bold   gui=bold   guifg=#FA0626 guibg=NONE
+    highlight Done      ctermfg=114 cterm=bold   gui=bold   guifg=#9ACD32 guibg=NONE
+    highlight Note      ctermfg=140 cterm=italic gui=italic guifg=#C8A2C8 guibg=NONE
+    highlight Usage     ctermfg=140 cterm=italic gui=bold   guifg=#C8A2C8 guibg=NONE
+    highlight Research  ctermfg=114 cterm=bold   gui=bold   guifg=#9ACD32 guibg=NONE
+    highlight Author    ctermfg=140 cterm=italic gui=italic guifg=#FFD700 guibg=NONE  
+  endfunction                                                             
 augroup END
 
 function! RunDetached(cmd)
