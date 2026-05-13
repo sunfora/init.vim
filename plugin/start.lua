@@ -87,6 +87,20 @@ enable_lsp("rust_analyzer", {
   cmd = { "rust-analyzer" },
 })
 
+enable_lsp("bashls", {
+  on_attach = on_attach,
+})
+
+
+vim.filetype.add({
+  extension = {
+    env = "sh",
+  },
+  filename = {
+    [".env"] = "sh",
+  },
+})
+
 -- Линтеры
 require('lint').linters_by_ft = {
   haskell = {'hlint'},
