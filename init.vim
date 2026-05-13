@@ -12,6 +12,10 @@ Plug 'kshenoy/vim-signature'
 " Add editable registers
 Plug 'm6z/VimRegDeluxe'
 
+" Add telescopre
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+
 " Try number two
 " https://www.youtube.com/watch?v=3a1PCir_aHs
 Plug 'williamboman/mason.nvim'

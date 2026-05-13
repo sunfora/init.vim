@@ -91,3 +91,48 @@ enable_lsp("rust_analyzer", {
 require('lint').linters_by_ft = {
   haskell = {'hlint'},
 }
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "scheme", "guile", "guile-scheme" },
+  callback = function()
+    
+    -- 1. gD: Ручной поиск по исходникам Guix
+    -- Просто открывает Telescope в папке с исходниками. Вбиваешь "package" или "origin" -> получаешь всё.
+    vim.keymap.set("n", "gD", function()
+      local guix_src = vim.fn.expand("~/.config/guix/current/share/guile/site/3.0/")
+      
+      if vim.fn.isdirectory(guix_src) == 0 then
+        print("Ошибка: Исходники Guix не найдены по пути: " .. guix_src)
+        return
+      end
+
+      require('telescope.builtin').live_grep({
+        prompt_title = "Поиск в исходниках Guix",
+        search_dirs = { guix_src },
+      })
+    end, { buffer = true, desc = "Ручной поиск по исходникам Guix" })
+
+    -- 2. gM: Ручной поиск по мануалам (info-страницам)
+    -- Ищет по всем .info файлам в твоем профиле. Идеально для поиска описания функций Guile.
+    vim.keymap.set("n", "gM", function()
+      -- Путь к info-страницам в Guix профиле
+      local info_path = vim.fn.expand("~/.guix-profile/share/info/")
+      
+      if vim.fn.isdirectory(info_path) == 0 then
+        -- Запасной вариант, если путь отличается
+        info_path = "/run/current-system/profile/share/info/"
+      end
+
+      if vim.fn.isdirectory(info_path) == 0 then
+        print("Ошибка: Папка с мануалами не найдена")
+        return
+      end
+
+      require('telescope.builtin').live_grep({
+        prompt_title = "Поиск в мануалах Guile/Guix",
+        search_dirs = { info_path },
+      })
+    end, { buffer = true, desc = "Ручной поиск по мануалам (info)" })
+
+  end,
+})
