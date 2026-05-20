@@ -108,6 +108,11 @@ require('lint').linters_by_ft = {
 }
 
 do
+  ---------------------------------------------------------------------
+  -- TODO(ivan): report this as a bug
+  --             I don't really think that it is expected to wrap the
+  --             guile-lsp
+  ---------------------------------------------------------------------
   local guix_profile = os.getenv("HOME") .. "/.guix-profile"
   local user_site = guix_profile .. "/share/guile/site/3.0"
   local user_ccache = guix_profile .. "/lib/guile/3.0/site-ccache"
@@ -118,7 +123,7 @@ do
     filetypes = { "scheme" },
     on_attach = on_attach,
     cmd_env = {
-      GUILE_LOAD_PATH = vim.fn.getcwd() .. ":" .. user_site,
+      GUILE_LOAD_PATH          = vim.fn.getcwd() .. ":" .. user_site,
       GUILE_LOAD_COMPILED_PATH = vim.fn.getcwd() .. ":" .. user_ccache,
     }
   })
