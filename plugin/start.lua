@@ -70,6 +70,7 @@ enable_lsp("clangd", {
 
 enable_lsp("hls", { on_attach = on_attach })
 enable_lsp("phpactor", { on_attach = on_attach })
+enable_lsp("intelephense", { on_attach = on_attach })
 enable_lsp("kotlin_language_server", { on_attach = on_attach })
 
 enable_lsp("racket_langserver", {
@@ -106,47 +107,19 @@ require('lint').linters_by_ft = {
   haskell = {'hlint'},
 }
 
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "scheme", "guile", "guile-scheme" },
-  callback = function()
-    
-    -- 1. gD: Ручной поиск по исходникам Guix
-    -- Просто открывает Telescope в папке с исходниками. Вбиваешь "package" или "origin" -> получаешь всё.
-    vim.keymap.set("n", "gD", function()
-      local guix_src = vim.fn.expand("~/.config/guix/current/share/guile/site/3.0/")
-      
-      if vim.fn.isdirectory(guix_src) == 0 then
-        print("Ошибка: Исходники Guix не найдены по пути: " .. guix_src)
-        return
-      end
+do
+  local guix_profile = os.getenv("HOME") .. "/.guix-profile"
+  local user_site = guix_profile .. "/share/guile/site/3.0"
+  local user_ccache = guix_profile .. "/lib/guile/3.0/site-ccache"
 
-      require('telescope.builtin').live_grep({
-        prompt_title = "Поиск в исходниках Guix",
-        search_dirs = { guix_src },
-      })
-    end, { buffer = true, desc = "Ручной поиск по исходникам Guix" })
-
-    -- 2. gM: Ручной поиск по мануалам (info-страницам)
-    -- Ищет по всем .info файлам в твоем профиле. Идеально для поиска описания функций Guile.
-    vim.keymap.set("n", "gM", function()
-      -- Путь к info-страницам в Guix профиле
-      local info_path = vim.fn.expand("~/.guix-profile/share/info/")
-      
-      if vim.fn.isdirectory(info_path) == 0 then
-        -- Запасной вариант, если путь отличается
-        info_path = "/run/current-system/profile/share/info/"
-      end
-
-      if vim.fn.isdirectory(info_path) == 0 then
-        print("Ошибка: Папка с мануалами не найдена")
-        return
-      end
-
-      require('telescope.builtin').live_grep({
-        prompt_title = "Поиск в мануалах Guile/Guix",
-        search_dirs = { info_path },
-      })
-    end, { buffer = true, desc = "Ручной поиск по мануалам (info)" })
-
-  end,
-})
+  enable_lsp("guile_lsp_server", {
+    cmd = { "guile-lsp-server" }, 
+    root_markers = { ".git" },
+    filetypes = { "scheme" },
+    on_attach = on_attach,
+    cmd_env = {
+      GUILE_LOAD_PATH = vim.fn.getcwd() .. ":" .. user_site,
+      GUILE_LOAD_COMPILED_PATH = vim.fn.getcwd() .. ":" .. user_ccache,
+    }
+  })
+end
