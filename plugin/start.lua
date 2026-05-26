@@ -108,11 +108,6 @@ require('lint').linters_by_ft = {
 }
 
 do
-  ---------------------------------------------------------------------
-  -- TODO(ivan): report this as a bug
-  --             I don't really think that it is expected to wrap the
-  --             guile-lsp
-  ---------------------------------------------------------------------
   local guix_profile = os.getenv("HOME") .. "/.guix-profile"
   local user_site = guix_profile .. "/share/guile/site/3.0"
   local user_ccache = guix_profile .. "/lib/guile/3.0/site-ccache"

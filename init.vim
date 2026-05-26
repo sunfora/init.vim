@@ -16,6 +16,10 @@ Plug 'm6z/VimRegDeluxe'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 
+" Add lf integration
+Plug 'ptzz/lf.vim'
+Plug 'voldikss/vim-floaterm'
+
 " Try number two
 " https://www.youtube.com/watch?v=3a1PCir_aHs
 Plug 'williamboman/mason.nvim'
