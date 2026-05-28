@@ -103,13 +103,13 @@ nnoremap <silent><C-Left> ?[<{[("'`]<CR>
 nnoremap <silent><C-Right> /[<{[("'`]<CR>
 nnoremap <silent><C-S-Right> <C-Left><C-Right>%<C-Right>
 nnoremap <silent><C-S-Left> <C-Left><C-Right>?[]"'`)}>]<CR>%
-vnoremap <silent>s( <Esc>`<i(<Esc>`>la)<Esc>`<
-vnoremap <silent>s< <Esc>`<i<<Esc>`>la><Esc>`<
-vnoremap <silent>s{ <Esc>`<i{<Esc>`>la}<Esc>`<
-vnoremap <silent>s[ <Esc>`<i[<Esc>`>la]<Esc>`<
-vnoremap <silent>s" <Esc>`<i"<Esc>`>la"<Esc>`<
-vnoremap <silent>s' <Esc>`<i'<Esc>`>la'<Esc>`<
-vnoremap <silent>s` <Esc>`<i`<Esc>`>la`<Esc>`<
+vnoremap <silent>s( <Esc>`>a)<Esc>`<i(<Esc>
+vnoremap <silent>s< <Esc>`>a><Esc>`<i<<Esc>
+vnoremap <silent>s{ <Esc>`>a}<Esc>`<i{<Esc>
+vnoremap <silent>s[ <Esc>`>a]<Esc>`<i[<Esc>
+vnoremap <silent>s" <Esc>`>a"<Esc>`<i"<Esc>
+vnoremap <silent>s' <Esc>`>a'<Esc>`<i'<Esc>
+vnoremap <silent>s` <Esc>`>a`<Esc>`<i`<Esc>
 vnoremap <silent><C-Down> <Esc>`>x`<x
 nnoremap gp `[v`]
 
