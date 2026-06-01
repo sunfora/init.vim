@@ -53,7 +53,6 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 " Add some tree sitter experience
-Plug 'nvim-treesitter/nvim-treesitter', { 'branch': 'main' }
 Plug 'shushtain/incselect.nvim'
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 
