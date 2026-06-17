@@ -1,0 +1,2 @@
+E_ALL;
+E_ERROR;
