@@ -64,6 +64,9 @@ Plug 'Abstract-IDE/Abstract-cs'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'reobin/olive-crt.nvim'
 
+" Emoji...
+Plug 'WilsonOh/emoji_picker-nvim'
+
 call plug#end()
 
 " Here ends the plugin section.
@@ -543,5 +546,17 @@ vim.api.nvim_create_user_command('TimeMachine', function()
     end
   })
 end, { desc = "Browse file history safely in a read-only scratch buffer" })
+EOF
+
+lua<<EOF
+vim.keymap.set('n', '<M-e>', function()
+  local original_cursor = vim.api.nvim_win_get_cursor(0)
+  vim.cmd('normal! s')
+  require("emoji_picker").open_win()
+  vim.defer_fn(function()
+    vim.api.nvim_win_get_cursor(0)
+    vim.api.nvim_win_set_cursor(0, original_cursor)
+  end, 50)
+end, { silent = true })
 EOF
 " Get to the top (#top)
