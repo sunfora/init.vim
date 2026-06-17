@@ -303,10 +303,10 @@ lua<<EOF
 local ok, incselect = pcall(require, "incselect")
 if ok then
   -- Normal mode: Enter to start selection
-  vim.keymap.set("n", "<CR>", incselect.init)
+  vim.keymap.set("n", "<Space>", incselect.init)
   
   -- Visual mode: Ctrl+Up to grow selection, Ctrl+Down to shrink selection
- vim.keymap.set("x", "<C-S-Up>", incselect.parent)
+ vim.keymap.set("x", "<C-S-Up>",   incselect.parent)
  vim.keymap.set("x", "<C-S-Down>", incselect.undo)
 end
 EOF
