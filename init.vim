@@ -492,4 +492,56 @@ au BufRead,BufNewFile *.grep set filetype=grep
 
 map <silent>; :CtrlPBuffer<CR>
 
+" AI_GENERATED(ivan): add git time machine file viewer
+"                     in a separate readonly buffer
+lua<<EOF
+vim.api.nvim_create_user_command('TimeMachine', function()
+  -- 1. Grab the current filetype and git-relative path before opening Telescope
+  local original_ft = vim.bo.filetype
+  local current_file_path = vim.fn.expand('%:p')
+  local repo_relative_file = vim.fn.systemlist('git ls-files --full-name ' .. vim.fn.shellescape(current_file_path))[1]
+  
+  if not repo_relative_file or repo_relative_file == "" then
+    vim.notify("Current file is not tracked by Git", vim.log.levels.ERROR)
+    return
+  end
+
+  local actions = require('telescope.actions')
+  local action_state = require('telescope.actions.state')
+
+  require('telescope.builtin').git_bcommits({
+    prompt_title = "Time Machine (Read-Only Preview)",
+    attach_mappings = function(prompt_bufnr, map)
+      
+      local open_safely = function()
+        local entry = action_state.get_selected_entry()
+        if not entry then return end
+        local commit = entry.value
+
+        actions.close(prompt_bufnr)
+
+        local buf = vim.api.nvim_create_buf(false, true)
+        vim.api.nvim_win_set_buf(0, buf)
+
+        local cmd = string.format('git show %s:%s', commit, repo_relative_file)
+        local content = vim.fn.systemlist(cmd)
+        vim.api.nvim_buf_set_lines(buf, 0, -1, false, content)
+
+        -- 2. Restore syntax highlighting colors
+        vim.bo[buf].filetype = original_ft
+
+        -- 3. Force strict read-only states
+        vim.bo[buf].buftype = 'nofile'
+        vim.bo[buf].bufhidden = 'wipe'
+        vim.bo[buf].modifiable = false
+        vim.bo[buf].readonly = true
+      end
+
+      map('i', '<CR>', open_safely)
+      map('n', '<CR>', open_safely)
+      return true
+    end
+  })
+end, { desc = "Browse file history safely in a read-only scratch buffer" })
+EOF
 " Get to the top (#top)
