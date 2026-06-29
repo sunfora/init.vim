@@ -17,9 +17,6 @@ end
 
 require("mason").setup()
 
-require("mason-lspconfig").setup {
-  on_attach = on_attach,
-}
 
 local function enable_lsp(server_name, opts)
   vim.lsp.config(server_name, opts or {})
@@ -41,16 +38,13 @@ enable_lsp("css_variables", {
 enable_lsp("jdtls", { on_attach = on_java_attach })
 
 enable_lsp("basedpyright", {
+  cmd = { "basedpyright-langserver", "--stdio" },
   on_attach = on_attach,
-  settings  = {
+  settings = {
     basedpyright = {
-      analysis   = {
-        diagnosticSeverityOverrides = {
-          reportExplicitAny         = "none",
-          reportUnknownVariableType = "none",
-          reportUnknownArgumentType = "none",
-          reportAny                 = "none",
-        },
+      analysis = {
+        typeCheckingMode = "basic",       -- Вырубает душную проверку типов сторонних либ
+        diagnosticSeverityOverrides = {}, -- ПОЛНОСТЬЮ убираем заглушки, чтобы ошибки вылезли на экран
       },
     },
   },
@@ -68,7 +62,7 @@ enable_lsp("hls",                    { on_attach = on_attach })
 enable_lsp("phpactor",               { on_attach = on_attach })
 enable_lsp("kotlin_language_server", { on_attach = on_attach })
 enable_lsp("bashls",                 { on_attach = on_attach })
-enable_lsp("assembly",               { on_attach = on_attach })
+enable_lsp("asm_lsp",                { on_attach = on_attach })
 
 enable_lsp("racket_langserver", {
   cmd = { "racket", "--lib", "racket-langserver" },

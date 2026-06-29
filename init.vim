@@ -44,7 +44,6 @@ Plug 'voldikss/vim-floaterm'
 " Try number two
 " https://www.youtube.com/watch?v=3a1PCir_aHs
 Plug 'williamboman/mason.nvim'
-Plug 'williamboman/mason-lspconfig.nvim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'mfussenegger/nvim-lint'
 
