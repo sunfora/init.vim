@@ -41,7 +41,7 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'ptzz/lf.vim'
 Plug 'voldikss/vim-floaterm'
 
-" Try number two
+" Some lsp intro
 " https://www.youtube.com/watch?v=3a1PCir_aHs
 Plug 'williamboman/mason.nvim'
 Plug 'neovim/nvim-lspconfig'
