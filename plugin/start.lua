@@ -23,19 +23,16 @@ local function enable_lsp(server_name, opts)
   vim.lsp.enable(server_name)
 end
 
--- Настройка всех серверов
-enable_lsp("ts_ls", { on_attach = on_attach }) 
-enable_lsp("html", { on_attach = on_attach })
-
-
-enable_lsp("cssls", {
-  on_attach = on_attach,
-})
-enable_lsp("css_variables", {
-  on_attach = on_attach,
-})
-
-enable_lsp("jdtls", { on_attach = on_java_attach })
+enable_lsp("ts_ls",                  { on_attach = on_attach      }) 
+enable_lsp("html",                   { on_attach = on_attach      })
+enable_lsp("cssls",                  { on_attach = on_attach      })
+enable_lsp("css_variables",          { on_attach = on_attach      })
+enable_lsp("hls",                    { on_attach = on_attach      })
+enable_lsp("phpactor",               { on_attach = on_attach      })
+enable_lsp("kotlin_language_server", { on_attach = on_attach      })
+enable_lsp("bashls",                 { on_attach = on_attach      })
+enable_lsp("asm_lsp",                { on_attach = on_attach      })
+enable_lsp("jdtls",                  { on_attach = on_java_attach })
 
 enable_lsp("basedpyright", {
   cmd = { "basedpyright-langserver", "--stdio" },
@@ -43,26 +40,21 @@ enable_lsp("basedpyright", {
   settings = {
     basedpyright = {
       analysis = {
-        typeCheckingMode = "basic",       -- Вырубает душную проверку типов сторонних либ
-        diagnosticSeverityOverrides = {}, -- ПОЛНОСТЬЮ убираем заглушки, чтобы ошибки вылезли на экран
+        typeCheckingMode = "basic",
+        diagnosticSeverityOverrides = {},
       },
     },
   },
 })
 
 enable_lsp("clangd", {
-  init_options = {
-    fallbackFlags = { '-Wall', '-Wextra' }
+  cmd = {
+    "clangd",
+    "--query-driver=*",
+    "--background-index",
   },
-  clang_user_options = ' -DCLANG_COMPLETE_ONLY',
-  on_attach          = on_attach,
+  on_attach = on_attach,
 })
-
-enable_lsp("hls",                    { on_attach = on_attach })
-enable_lsp("phpactor",               { on_attach = on_attach })
-enable_lsp("kotlin_language_server", { on_attach = on_attach })
-enable_lsp("bashls",                 { on_attach = on_attach })
-enable_lsp("asm_lsp",                { on_attach = on_attach })
 
 enable_lsp("racket_langserver", {
   cmd = { "racket", "--lib", "racket-langserver" },
@@ -79,8 +71,6 @@ enable_lsp("rust_analyzer", {
   on_attach = on_attach,
   cmd = { "rust-analyzer" },
 })
-
-
 
 enable_lsp("lua_ls", {
   on_attach = on_attach,
