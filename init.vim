@@ -517,4 +517,8 @@ EOF
 
 nnoremap <silent>- :Gitsigns blame<CR>
 nnoremap <silent>_ :Gitsigns toggle_current_line_blame<CR>
+
+lua<<EOF
+  vim.o.exrc = true
+EOF
 " Get to the top (#top)
