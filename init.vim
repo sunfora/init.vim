@@ -2,6 +2,7 @@
 " Sometimes things here are a little messy.
 " 
 " Index: (#top)
+"   0. (#imports_i)
 "   1. (#plugin_i)
 "   2. (#tree_sitter_i)
 "   3. (#color_schemes_i)
@@ -12,6 +13,13 @@
 "   8. (#build_i)
 "   9. (#unsorted_i)
 "
+" -----------------------------------------------------------------------------
+"  Plugin (#imports_i)
+" -----------------------------------------------------------------------------
+"  Index: (#imports)
+
+" Here ends the imports section.
+" Get to the top: (#imports)
 "
 " -----------------------------------------------------------------------------
 "  Plugin (#plugin_i)
