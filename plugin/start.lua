@@ -17,6 +17,16 @@ end
 
 require("mason").setup()
 
+require("splitasm").setup({
+  compiler_cmd = nil,
+  executable_path = nil,
+  source_path_mappings = {},
+  auto_sync = true,
+  hide_address = false,
+  source_row_colors = true,
+  show_line_numbers = true,
+  preferred_objdump = "gnu-objdump"
+})
 
 local function enable_lsp(server_name, opts)
   vim.lsp.config(server_name, opts or {})

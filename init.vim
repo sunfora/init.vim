@@ -66,6 +66,9 @@ Plug 'reobin/olive-crt.nvim'
 " Emoji...
 Plug 'WilsonOh/emoji_picker-nvim'
 
+" Asm splitview
+Plug 'NickTsaizer/splitasm.nvim'
+
 call plug#end()
 
 " Here ends the plugin section.
@@ -198,6 +201,8 @@ set shiftwidth=2
 set softtabstop=2
 set expandtab
 retab
+
+set cursorline
 
 " Disable smart asses who override my config
 autocmd FileType * setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
