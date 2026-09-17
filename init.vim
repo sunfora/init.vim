@@ -66,6 +66,9 @@ Plug 'reobin/olive-crt.nvim'
 " Emoji...
 Plug 'WilsonOh/emoji_picker-nvim'
 
+" Git blame
+Plug 'lewis6991/gitsigns.nvim'
+
 " Asm splitview
 Plug 'NickTsaizer/splitasm.nvim'
 
@@ -510,4 +513,8 @@ vim.keymap.set('n', '<M-e>', function()
   end, 50)
 end, { silent = true })
 EOF
+
+
+nnoremap <silent>- :Gitsigns blame<CR>
+nnoremap <silent>_ :Gitsigns toggle_current_line_blame<CR>
 " Get to the top (#top)
