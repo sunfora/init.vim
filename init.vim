@@ -18,6 +18,17 @@
 " -----------------------------------------------------------------------------
 "  Index: (#imports)
 
+lua<<EOF
+  local zerobrane_debugger     = io.popen("find $(flatpak info com.zerobrane.studio -l) -name mobdebug"):read()
+  local zerobrane_socket_stuff = io.popen("find $(flatpak info com.zerobrane.studio -l) -name lualibs"):read()
+  local zerobrane_socket_bin   = io.popen("find $(flatpak info com.zerobrane.studio -l) -wholename *lib/lua/5.1"):read()
+
+  -- update package.path so vim can see it
+  package.path = package.path .. ";" .. zerobrane_debugger     .. "/?.lua"
+  package.path = package.path .. ";" .. zerobrane_socket_stuff .. "/?.lua"
+  package.cpath = package.cpath .. ";" .. zerobrane_socket_bin .. "/?.so"
+EOF
+
 " Here ends the imports section.
 " Get to the top: (#imports)
 "
