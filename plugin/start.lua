@@ -107,20 +107,3 @@ vim.filetype.add({
 require('lint').linters_by_ft = {
   haskell = {'hlint'},
 }
-
-do
-  local guix_profile = os.getenv("HOME") .. "/.guix-profile"
-  local user_site   = guix_profile .. "/share/guile/site/3.0"
-  local user_ccache = guix_profile .. "/lib/guile/3.0/site-ccache"
-
-  enable_lsp("guile_lsp_server", {
-    cmd = { "guile-lsp-server" }, 
-    root_markers = { ".git" },
-    filetypes = { "scheme" },
-    on_attach = on_attach,
-    cmd_env = {
-      GUILE_LOAD_PATH          = vim.fn.getcwd() .. ":" .. user_site,
-      GUILE_LOAD_COMPILED_PATH = vim.fn.getcwd() .. ":" .. user_ccache,
-    }
-  })
-end
